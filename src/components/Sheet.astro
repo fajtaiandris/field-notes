@@ -1,0 +1,8 @@
+---
+import { render } from "astro:content";
+
+const { entry, fold } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<div class="page" data-fold={fold}><Content /></div>

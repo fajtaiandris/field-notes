@@ -1,0 +1,49 @@
+---
+const {
+  notFound = false,
+  showTitle = true,
+  includeFoldback = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline src="/simplified-view.js"></script>
+    {includeFoldback && <script is:inline src="/foldback.js"></script>}
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{notFound ? "404 / " : ""}Frontend Age.</title>
+  </head>
+  <body>
+    <svg class="wear-filter" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="wear">
+        <feTurbulence type="turbulence" baseFrequency="0.0009" numOctaves="4" result="texture">
+          <animate attributeName="baseFrequency" values="0.0009;0.0010;0.0006;0.0011;0.0009;0.0007;0.001;0.0008;0.0009" dur="9s" repeatCount="indefinite" calcMode="discrete" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="texture" scale="13" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="wear-2">
+        <feTurbulence type="turbulence" baseFrequency="0.012" numOctaves="4" result="texture" />
+        <feDisplacementMap in="SourceGraphic" in2="texture" scale="2" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+    <header>
+      {showTitle && (
+        <div class="header-left">
+          <h1>Field Notes <small>from the</small> Frontend Age.</h1>
+          <slot name="pagination" />
+        </div>
+      )}
+      <button class="a11y" type="button" aria-label="Simplified view" aria-pressed="false" hidden></button>
+    </header>
+    <main>
+      <div class="book"><slot /></div>
+    </main>
+    <footer>
+      written by <a href="#">fajtaiandris</a>; subscribe to the <a href="#">newsletter</a>
+    </footer>
+  </body>
+</html>

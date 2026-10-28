@@ -1,0 +1,14 @@
+---
+const { notFound = false } = Astro.props;
+---
+
+<div class="page cover" data-fold="right">
+  {notFound ? (
+    <><h1>404</h1><p>Page not found</p></>
+  ) : (
+    <><h1>FIELD NOTES</h1><p>from the Frontend Age.</p></>
+  )}
+</div>
+<a href="/1-2" class="flip-link">
+  {notFound ? "Start here" : "Read it"} &gt;&gt;
+</a>

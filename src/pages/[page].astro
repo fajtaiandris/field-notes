@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import Pagination from "../components/Pagination.astro";
+import Sheet from "../components/Sheet.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { pagePath } from "../lib/book.js";
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("sheets"))
+    .sort((a, b) => Number(a.id) - Number(b.id));
+
+  // The URL and navigation model assumes sheets are numbered from 1 without gaps.
+  entries.forEach((entry, index) => {
+    if (entry.id !== String(index + 1)) {
+      throw new Error(`Expected sheet ${index + 1}, found ${entry.id}`);
+    }
+  });
+
+  const paths = [];
+  for (let index = 0; index < entries.length; index++) {
+    const first = index + 1;
+    paths.push({
+      params: { page: String(first) },
+      props: { first, sheets: [entries[index]], pageCount: entries.length },
+    });
+
+    if (index % 2 === 0) {
+      paths.push({
+        params: { page: `${first}-${first + 1}` },
+        props: {
+          first,
+          sheets: [entries[index], entries[index + 1] ?? null],
+          pageCount: entries.length,
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const { first, sheets, pageCount } = Astro.props;
+const spread = sheets.length === 2;
+const step = spread ? 2 : 1;
+const previous = first === 1 ? null : pagePath(Math.max(1, first - step), spread);
+const nextFirst = first + step;
+const next = nextFirst > pageCount
+  ? null
+  : pagePath(nextFirst, spread);
+const label = spread && sheets[1]
+  ? `Pages ${first}-${first + 1} of ${pageCount}`
+  : `Page ${first} of ${pageCount}`;
+---
+
+<SiteLayout includeFoldback>
+  <Pagination slot="pagination" previous={previous} next={next} label={label} spread={spread} />
+  {sheets.map((entry, index) => (
+    entry
+      ? <Sheet entry={entry} fold={spread ? (index === 0 ? "left" : "right") : (first % 2 === 0 ? "right" : "left")} />
+      : <div class="page" data-fold="right" aria-hidden="true"></div>
+  ))}
+</SiteLayout>
