@@ -1,17 +1,19 @@
 ---
+import Triangle from "./Triangle.astro";
+
 const { previous, next, label, spread } = Astro.props;
 ---
 
 <nav class="pagination" aria-label="Pages">
   {previous ? (
-    <a href={previous} aria-label={spread ? "Previous pages" : "Previous page"}>◀</a>
+    <a href={previous} aria-label={spread ? "Previous pages" : "Previous page"}><Triangle direction="left" /></a>
   ) : (
-    <span class="pagination-end" aria-hidden="true">◀</span>
+    <span class="pagination-end" aria-hidden="true"><Triangle direction="left" /></span>
   )}
   <span>{label}</span>
   {next ? (
-    <a href={next} aria-label={spread ? "Next pages" : "Next page"}>▶</a>
+    <a href={next} aria-label={spread ? "Next pages" : "Next page"}><Triangle direction="right" /></a>
   ) : (
-    <span class="pagination-end" aria-hidden="true">▶</span>
+    <span class="pagination-end" aria-hidden="true"><Triangle direction="right" /></span>
   )}
 </nav>

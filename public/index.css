@@ -1,5 +1,6 @@
 :root {
   --fluid-step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
+  --fluid-step-1: clamp(1.35rem, 1.2631rem + 0.3864vw, 1.5625rem);
   --fluid-step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
   --fluid-step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
   --fluid-space-xs: clamp(0.875rem, 0.8533rem + 0.1087vw, 0.9375rem);
@@ -123,7 +124,7 @@ header *::selection {
 .pagination {
   filter: url(#wear-2);
   padding: 0 var(--fluid-space-xs);
-  font-size: var(--fluid-step--1);
+  font-size: var(--fluid-step-1);
   color: var(--color-headline-ink-2);
   background: var(--color-headline-strip);
   display: flex;
@@ -131,6 +132,9 @@ header *::selection {
   gap: 15px;
   width: max-content;
   margin-top: 5px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  letter-spacing: -0.08em;
 }
 
 .pagination a {
@@ -142,10 +146,11 @@ header *::selection {
   color: var(--color-headline-ink);
 }
 
-.pagination span {
-  font-family: Georgia, "Times New Roman", serif;
-  font-style: italic;
-  letter-spacing: -0.08em;
+.pagination svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
 }
 
 .pagination .pagination-end {
