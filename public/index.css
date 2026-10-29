@@ -9,6 +9,8 @@
   --fluid-space-l: clamp(2.25rem, 2.163rem + 0.4348vw, 2.5rem);
   --fluid-space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
   --fluid-space-s-l: clamp(1.125rem, 0.5625rem + 2.5vw, 2.5rem);
+  /* 266px page + two 27px gutters fits the 320px reflow width. */
+  --single-page-min-width: 266px;
 
   --color-surface: #e7e3d9;
   --color-surface-light: #f0ede6;
@@ -64,6 +66,7 @@ body {
     "main main main"
     ". footer .";
   align-content: start;
+  min-inline-size: calc(var(--single-page-min-width) + 2 * var(--fluid-space-m));
   min-height: 100dvh;
   background-image:
     url("noise.svg"),
@@ -212,6 +215,7 @@ footer {
   font-size: var(--fluid-step--1);
   color: var(--color-headline-strip);
   filter: url(#wear-2);
+  text-align: center;
 }
 
 footer::selection {
@@ -236,7 +240,7 @@ main {
 
 .book {
   position: relative;
-  --page-min-width: calc(5 * var(--fluid-space-xl));
+  --page-min-width: var(--single-page-min-width);
   --page-max-width: calc(7 * var(--fluid-space-xl));
   --available-page-width: 100cqw;
   --page-w: clamp(
