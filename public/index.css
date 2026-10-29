@@ -213,18 +213,19 @@ footer {
   margin-block: var(--fluid-space-m) var(--fluid-space-s);
   padding-inline: var(--fluid-space-xs);
   font-size: var(--fluid-step--1);
-  color: var(--color-headline-strip);
+  color: var(--color-backdrop-ink);
   filter: url(#wear-2);
   text-align: center;
 }
 
-footer::selection {
-  background-color: var(--color-headline-strip);
-  color: var(--color-headline-ink);
+footer::selection,
+footer *::selection {
+  background-color: var(--color-backdrop-ink);
+  color: var(--color-surface);
 }
 
 footer a {
-  color: var(--color-headline-strip);
+  color: inherit;
   text-decoration: underline;
 }
 
