@@ -8,6 +8,7 @@
   --fluid-space-m: clamp(1.6875rem, 1.6223rem + 0.3261vw, 1.875rem);
   --fluid-space-l: clamp(2.25rem, 2.163rem + 0.4348vw, 2.5rem);
   --fluid-space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
+  --fluid-space-s-l: clamp(1.125rem, 0.5625rem + 2.5vw, 2.5rem);
 
   --color-surface: #e7e3d9;
   --color-surface-light: #f0ede6;
@@ -55,7 +56,13 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 65rem) minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    ". header ."
+    ". pagination ."
+    "main main main"
+    ". footer .";
   align-content: start;
   min-height: 100dvh;
   background-image:
@@ -83,9 +90,10 @@ body {
 }
 
 header {
+  grid-area: header;
   color: var(--color-backdrop-ink);
   padding-inline: var(--fluid-space-xs);
-  margin-block: var(--fluid-space-s) var(--fluid-space-l);
+  margin-top: var(--fluid-space-s);
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -122,6 +130,8 @@ header *::selection {
 }
 
 .pagination {
+  grid-area: pagination;
+  justify-self: start;
   filter: url(#wear-2);
   padding: 0 var(--fluid-space-xs);
   font-size: var(--fluid-step-1);
@@ -132,6 +142,7 @@ header *::selection {
   gap: 15px;
   width: max-content;
   margin-top: 5px;
+  margin-left: var(--fluid-space-xs);
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
   letter-spacing: -0.08em;
@@ -160,6 +171,22 @@ header *::selection {
   opacity: 0.5;
 }
 
+body[data-page-layout="single"] {
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas:
+    ". header ."
+    "main main main"
+    ". pagination ."
+    ". . ."
+    ". footer .";
+}
+
+body[data-page-layout="single"] .pagination {
+  justify-self: center;
+  margin-top: var(--fluid-space-m);
+  margin-left: 0;
+}
+
 .a11y {
   background: none;
   color: var(--color-backdrop-ink);
@@ -177,26 +204,34 @@ header *::selection {
 }
 
 footer {
+  grid-area: footer;
   justify-self: center;
   width: fit-content;
   margin-block: var(--fluid-space-m) var(--fluid-space-s);
   padding-inline: var(--fluid-space-xs);
   font-size: var(--fluid-step--1);
-  background-color: var(--color-headline-strip);
-  color: var(--color-headline-ink);
+  color: var(--color-headline-strip);
   filter: url(#wear-2);
 }
 
+footer::selection {
+  background-color: var(--color-headline-strip);
+  color: var(--color-headline-ink);
+}
+
 footer a {
-  color: var(--color-headline-ink-2);
+  color: var(--color-headline-strip);
   text-decoration: underline;
 }
 
 main {
+  grid-area: main;
   display: grid;
   place-items: start center;
+  align-content: start;
   container-type: inline-size;
   padding: 0 var(--fluid-space-m);
+  margin-top: var(--fluid-space-s-l);
 }
 
 .book {

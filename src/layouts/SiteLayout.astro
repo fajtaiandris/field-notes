@@ -3,6 +3,7 @@ const {
   notFound = false,
   showTitle = true,
   includeFoldback = false,
+  pageLayout,
 } = Astro.props;
 ---
 
@@ -17,7 +18,7 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{notFound ? "404 / " : ""}Frontend Age.</title>
   </head>
-  <body>
+  <body data-page-layout={pageLayout}>
     <svg class="wear-filter" width="0" height="0" aria-hidden="true" focusable="false">
       <filter id="wear">
         <feTurbulence type="turbulence" baseFrequency="0.0009" numOctaves="4" result="texture">
@@ -34,11 +35,11 @@ const {
       {showTitle && (
         <div class="header-left">
           <h1>Field Notes <small>from the</small> Frontend Age.</h1>
-          <slot name="pagination" />
         </div>
       )}
       <button class="a11y" type="button" aria-label="Simplified view" aria-pressed="false" hidden></button>
     </header>
+    <slot name="pagination" />
     <main>
       <div class="book"><slot /></div>
     </main>

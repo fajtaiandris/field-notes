@@ -51,7 +51,7 @@ const label = spread && sheets[1]
   : `Page ${first} of ${pageCount}`;
 ---
 
-<SiteLayout includeFoldback>
+<SiteLayout includeFoldback pageLayout={spread ? "double" : "single"}>
   <Pagination slot="pagination" previous={previous} next={next} label={label} spread={spread} />
   {sheets.map((entry, index) => (
     entry
