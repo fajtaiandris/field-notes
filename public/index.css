@@ -26,6 +26,9 @@
   --color-fold-shadow: rgba(70, 70, 70, 0.65);
   --color-fold-gloss: rgba(255, 255, 255, 0.8);
   --color-cover-gloss: #4a4a4a;
+  --grid-squares:
+    linear-gradient(to right, var(--color-print) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-print) 1px, transparent 1px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -275,9 +278,7 @@ main {
 
 .book:has(> .cover) {
   background-color: var(--color-paper);
-  background-image:
-    linear-gradient(to right, var(--color-print) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-print) 1px, transparent 1px),
+  background-image: var(--grid-squares),
     linear-gradient(135deg, transparent 18%, var(--color-page-shadow) 100%);
   background-size:
     var(--square) var(--square),
@@ -292,9 +293,7 @@ main {
   flex: none;
   width: var(--page-w);
   aspect-ratio: 7 / 11;
-  background-image:
-    linear-gradient(to right, var(--color-print) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-print) 1px, transparent 1px);
+  background-image: var(--grid-squares);
   background-size:
     var(--square) var(--square),
     var(--square) var(--square);
@@ -407,6 +406,50 @@ main {
   .book {
     filter: url(#wear-2);
   }
+}
+
+@media (width <= 420px) {
+   body:not(:has(.cover)) {
+    main {
+      padding: 0;
+      margin-top: 0;
+    }
+  
+    .book {
+      box-shadow: none;
+      border-radius: 0 !important;
+    }
+  
+   .page {
+      background-image: none;
+      background-color: transparent;
+      border-radius: 0 !important;
+      margin-bottom: 0;
+    }
+  
+   .page::after {
+      background: none;
+    }
+  
+   .page[data-fold="left"],
+   .page[data-fold="right"] {
+      box-shadow: none;
+    }
+  
+    & {
+      --square: var(--fluid-space-s);
+      background-color: var(--color-paper);
+      background-image: var(--grid-squares);
+      background-size:
+        var(--square) var(--square),
+        var(--square) var(--square);
+      background-blend-mode: normal;
+    }
+  
+    body[data-page-layout="single"] .pagination {
+      margin-top: var(--square);
+    }
+   }
 }
 
 html[data-simplified] :is(*) {
